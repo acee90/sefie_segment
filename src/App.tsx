@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useRef } from "react";
+import "./App.css";
+
+import "./selfie.scss";
+
+import SelfieSetup from './selfie';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	/**
+	 * @fileoverview Demonstrates a minimal use case for MediaPipe face tracking.
+	 */
+
+	const videoRef = useRef<HTMLVideoElement>(null);
+	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const controlsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+		if (videoRef.current && canvasRef.current)
+			SelfieSetup(videoRef, canvasRef);
+	}, []);
+
+	return (
+		<div className="App">
+			<div className="container">
+				<video
+					ref={videoRef}
+					autoPlay
+					// style={{ float: "left", width: "40%" }}
+					hidden
+					width="720px"
+					height="480px"
+				></video>
+				<canvas
+					ref={canvasRef}
+					// width="720px"
+					// height="480px"
+				></canvas>
+			</div>
+			<div ref={controlsRef} className="control-panel"></div>
+		</div>
+	);
 }
 
 export default App;
